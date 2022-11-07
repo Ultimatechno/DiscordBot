@@ -31,6 +31,21 @@ client.loadSlashCommands(bot, false)
 
 module.exports = bot
 
+client.on("interactionCreate", (interaction) => {
+  if (!interaction.isCommand()) return
+  if (!interaction.inGuild()) return interaction.reply("This command can only be used in a server")
+
+  const slashcmd = client.slashcommands.get(interaction.commandName)
+
+  if (!slashcmd) return interaction.reply("Invalid slash command")
+
+  if (slashcmd.perms && !interaction.member.permissions.has(slashcmd.perm))
+    return  interaction.reply("You do not have permission for this command")
+
+  slashcmd.run(client, interaction)
+
+})
+
 // client.on("ready", () => {
 //   console.log(`Logged in as ${client.user.tag}`)
 // })
