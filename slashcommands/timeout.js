@@ -17,12 +17,13 @@ const run = async (client, interaction) => {
 
   try {
     await member.timeout(duration, reason)
-    return interaction.reply(`${member.user.tag} has been timed out for ${durations.find((d) => duration === d.value)?.name} with a reason of *${reason}*`)
+    return interaction.reply(`${member.user.tag} has been timed out for ${durations.find(d=> duration === d.value)?.name} with a reason of *${reason}*`)
   }
-  catch(err) {
-    if (err)
+  catch(err){
+    if (err){
       console.error(err)
       return interaction.reply(`Failed to timeout ${member.user.tag}`)
+    }
   }
 }
 
@@ -33,14 +34,14 @@ module.exports = {
   options: [
     {
       name: "user", description: "The user to timeout",
-      type: "USER", required: true,
+      type: "USER", required: true
     },
     {
       name: "duration",
       description: "The duration of the timeout",
       type: "NUMBER",
       choices: durations,
-      required: true,
+      required: true
     },
     {
       name: "reason",
